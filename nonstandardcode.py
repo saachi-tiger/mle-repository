@@ -1,6 +1,6 @@
 import os
 import tarfile
-import urllib
+import urllib.request
 
 import numpy as np
 import pandas as pd
