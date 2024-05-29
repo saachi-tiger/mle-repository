@@ -1,0 +1,40 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - feature
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: 3.10
+        activate-environment: myenv
+        environment-file: env.yml
+
+    - name: Install dependencies
+      run: |
+        conda env update --name myenv --file env.yml --prune
+        conda activate myenv
+        pip install flake8
+
+    - name: Run Flake8
+      run: |
+        conda activate myenv
+        flake8 .
+
+    - name: Run nonstandardcode.py
+      run: |
+        conda activate myenv
+        python nonstandardcode.py
