@@ -75,7 +75,10 @@ housing = strat_train_set.copy()
 housing.plot(kind="scatter", x="longitude", y="latitude")
 housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
 
-corr_matrix = housing.corr()
+# Drop the non-numeric column for correlation calculation
+housing_num = housing.drop("ocean_proximity", axis=1)
+
+corr_matrix = housing_num.corr()
 print(corr_matrix["median_house_value"].sort_values(ascending=False))
 
 housing["rooms_per_household"] = (
