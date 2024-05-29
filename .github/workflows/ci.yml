@@ -3,10 +3,10 @@ name: CI Workflow
 on:
   push:
     branches:
-      - feature
+      - '**'  # Matches any branch starting with 'feature/'
   pull_request:
     branches:
-      - main
+      - main  
 
 jobs:
   build:
@@ -20,8 +20,8 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2
       with:
         python-version: 3.10
-        activate-environment: myenv
         environment-file: env.yml
+        activate-environment: myenv
 
     - name: Install dependencies
       run: |
