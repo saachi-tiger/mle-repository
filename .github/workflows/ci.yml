@@ -5,7 +5,7 @@ on:
     branches: [main]
 
   push:
-    branches: [Assignment_2.1]
+    branches: [assignment_2.1]
 
 jobs:
   build:
