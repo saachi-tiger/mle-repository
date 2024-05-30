@@ -4,8 +4,6 @@ on:
   pull_request:
     branches: [main]
 
-  push:
-    branches: [assignment_2.1]
 
 jobs:
   build:
