@@ -27,6 +27,19 @@ jobs:
       with:
         python-version: '3.11'
 
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        environment-file: env.yml
+        activate-environment: mle-dev
+
+    - name: Generate requirements.txt
+      run: pip freeze > requirements.txt
+
+    - name: Clean up requirements.txt
+      run: |
+        sed -i '/^.* @ .*$/d' requirements.txt
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -43,12 +56,13 @@ jobs:
       with:
         name: build-artifacts
         path: dist/
-  build-2 :
+
+  build-2:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
@@ -57,18 +71,15 @@ jobs:
           activate-environment: mle-dev
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifacts
-      - name: run shell
-        run: echo $(pwd)
-      - name: run shell
-        run: echo $(ls -ra)
+
       - name: Install the package
-        run: pip install *.whl
+        run: pip install dist/*.whl
 
       - name: Run nonstandardcode.py
-        run: run-nonstandardcode
+        run: python run-nonstandardcode.py
 
-
-  
+      - name: Display directory tree after installation
+        run: tree
