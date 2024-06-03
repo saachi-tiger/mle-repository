@@ -64,29 +64,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Conda
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          environment-file: env.yml
-          activate-environment: mle-dev
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
-          path: dist/
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        environment-file: env.yml
+        activate-environment: mle-dev
 
-      - name: Verify directory structure
-        run: tree dist/
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
 
-      - name: Install the package
-        run: pip install dist/*.whl
+    - name: Verify directory structure
+      run: tree dist/
 
-      - name: Run nonstandardcode.py
-        run: python run-nonstandardcode.py
+    - name: Install the package
+      run: pip install dist/*.whl
 
-      - name: Display directory tree after installation
-        run: tree
+    - name: Run nonstandardcode.py
+      run: python run-nonstandardcode.py
+
+    - name: Display directory tree after installation
+      run: tree
