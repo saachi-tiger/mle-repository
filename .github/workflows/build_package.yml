@@ -83,8 +83,8 @@ jobs:
       with:
         name: build-artifacts
 
-    - name: Verify directory structure
-      run: tree dist/
+    - name: List downloaded artifacts
+      run: ls -la dist
 
     - name: Install the package
       run: pip install dist/*.whl
