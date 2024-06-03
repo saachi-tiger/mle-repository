@@ -95,7 +95,7 @@ jobs:
       run: pip install dist/*.whl
 
     - name: Run nonstandardcode.py
-      run: python run-nonstandardcode.py
+      run: python nonstandardcode.py
 
     - name: Display directory tree after installation
       run: tree
