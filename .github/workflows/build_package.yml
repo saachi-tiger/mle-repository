@@ -60,7 +60,7 @@ jobs:
         name: build-artifacts
         path: dist/
 
-  build-2:
+  build2:
     runs-on: ubuntu-latest
 
     steps:
@@ -77,6 +77,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+          path: dist/
+
+      - name: Verify directory structure
+        run: tree dist/
 
       - name: Install the package
         run: pip install dist/*.whl
