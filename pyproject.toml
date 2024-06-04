@@ -6,9 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "Housing Package"
 version = "0.1.0"
 description = "A brief description of your package"
-authors = [
-    { name = "Saachi Mohanty", email = "saachi.mohanty@tigeranalytics.com" }
-]
+authors = "Saachi Mohanty <saachi.mohanty@tigeranalytics.com>"
 readme = "README.md"
 license = "MIT"
 homepage = "https://github.com/saachi-tiger/mle-repository"
