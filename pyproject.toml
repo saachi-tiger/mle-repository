@@ -2,29 +2,29 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[project]
+[tool.poetry]
 name = "Housing Package"
 version = "0.1.0"
 description = "A brief description of your package"
-long_description = "file: README.md"
-long_description_content_type = "text/markdown"
 authors = [
     { name = "Saachi Mohanty", email = "saachi.mohanty@tigeranalytics.com" }
 ]
 readme = "README.md"
-license = { text = "MIT" }
-requires-python = ">=3.11"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent"
-]
+license = "MIT"
+homepage = "https://github.com/saachi-tiger/mle-repository"
 
-[project.urls]
-"Homepage" = "https://github.com/saachi-tiger/mle-repository"
-
-[project.dependencies]
+[tool.poetry.dependencies]
+python = "^3.11"
 numpy = "*"
 pandas = "*"
 scikit-learn = "*"
 matplotlib = "*"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+housing_price = 'src/house_package_saachi/housing_price.py'
