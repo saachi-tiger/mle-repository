@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Housing Package"
+name = "house_package_saachi"
 version = "0.1.0"
 description = "A brief description of your package"
 authors = ["Saachi Mohanty <saachi.mohanty@tigeranalytics.com>"]
