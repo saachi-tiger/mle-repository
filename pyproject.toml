@@ -17,4 +17,4 @@ matplotlib = "*"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-housing_price = 'house_package.housing_price:main'
+housing_price = 'house_package_saachi.housing_price:main'
