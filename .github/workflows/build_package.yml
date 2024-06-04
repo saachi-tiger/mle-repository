@@ -38,9 +38,6 @@ jobs:
     - name: Install dependencies
       run: poetry install
 
-    - name: Remove dist folder
-      run: rm -rf dist
-
     - name: Build the package
       run: poetry build
 
