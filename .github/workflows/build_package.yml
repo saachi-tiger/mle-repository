@@ -1,4 +1,4 @@
-name: Build Package
+name: Build and Deploy Package
 
 on:
   pull_request:
@@ -30,11 +30,16 @@ jobs:
         environment-file: env.yml
         activate-environment: mle-dev
 
-    - name: Install wheel
-      run: pip install wheel
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.poetry/bin:$PATH"
+
+    - name: Install dependencies
+      run: poetry install
 
     - name: Build the package
-      run: python setup.py sdist bdist_wheel
+      run: poetry build
 
     - name: Display directory tree after building
       run: tree
