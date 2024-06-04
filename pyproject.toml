@@ -22,9 +22,5 @@ matplotlib = "*"
 
 [tool.poetry.dev-dependencies]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry.scripts]
 housing_price = 'src/house_package_saachi/housing_price.py'
