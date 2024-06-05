@@ -53,7 +53,7 @@ jobs:
         name: build-artifacts
         path: dist/*
 
-  deploy_package:
+    deploy_package:
       runs-on: ubuntu-latest
 
       needs: build_package
@@ -77,13 +77,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifacts
+          path: dist  # Specify the path to download artifacts to
 
       - name: List downloaded artifacts
-        run: ls -la build-artifacts
+        run: ls -la dist
 
       - name: Install the package
         run: |
-          cd build-artifacts
+          cd dist
           pip install *.whl
 
       - name: Run housing_price.py
