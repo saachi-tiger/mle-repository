@@ -86,7 +86,9 @@ jobs:
         pip install *.whl
 
     - name: Run housing_price.py
-      run: python -m house_package_saachi.housing_price
+      run: |
+        source activate mle-dev  # Activate the Conda environment
+        python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
