@@ -2,7 +2,8 @@ name: CI pipeline
 
 on:
   pull_request:
-    branches: [Assignment_2.1]
+    branches:
+      - main
 
 
 jobs:

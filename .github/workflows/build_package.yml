@@ -75,7 +75,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build-artifacts
-        path: dist  # Specify the path to download artifacts to
+        path: dist  
 
     - name: List downloaded artifacts
       run: ls -la dist
@@ -86,7 +86,7 @@ jobs:
         pip install *.whl
 
     - name: Run housing_price.py
-      run: python src/house_package_saachi/housing_price.py
+      run: python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
