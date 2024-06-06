@@ -87,6 +87,7 @@ jobs:
 
     - name: Run housing_price.py
       run: |
+        conda init
         conda activate mle-dev
         python -m house_package_saachi.housing_price
 
