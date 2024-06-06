@@ -2,7 +2,11 @@ name: Build and Deploy
 
 on:
   pull_request:
-    branches: [Assignment_2.2]
+    branches: [main]
+  workflow_run:
+    workflows: ["ci.yml"]
+    types: [completed]
+
 
 jobs:
   build_package:
