@@ -87,7 +87,7 @@ jobs:
 
     - name: Run housing_price.py
       run: |
-        python house_package_saachi.housing_price
+        python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
