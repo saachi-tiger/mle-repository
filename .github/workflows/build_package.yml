@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   pull_request:
-    branches: [Assignment_2.2]
+    branches: [main]
 
 jobs:
   build_package:
