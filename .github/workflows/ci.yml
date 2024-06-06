@@ -38,4 +38,4 @@ jobs:
 
         run: |
 
-          python src/house_package_saachi/housing_price.py
+          python nonstandardcode.py
