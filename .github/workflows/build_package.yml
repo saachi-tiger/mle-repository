@@ -3,10 +3,6 @@ name: Build and Deploy
 on:
   pull_request:
     branches: [main]
-  workflow_run:
-    workflows: ["ci.yml"]
-    types: [completed]
-
 
 jobs:
   build_package:
@@ -33,11 +29,13 @@ jobs:
         environment-file: env.yml
         activate-environment: mle-dev
 
+    - name: Install build tools
+      run: |
+        conda run -n mle-dev pip install --upgrade setuptools build
+
     - name: Building the package
       run: |
-        pip install --upgrade setuptools
-        pip install --upgrade build
-        python -m build
+        conda run -n mle-dev python -m build
 
     - name: Display directory tree after building
       run: tree
@@ -82,12 +80,11 @@ jobs:
 
     - name: Install the package
       run: |
-        cd dist
-        pip install *.whl
+        conda run -n mle-dev pip install dist/*.whl
 
     - name: Run housing_price.py
       run: |
-        python -m house_package_saachi.housing_price
+        conda run -n mle-dev python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
