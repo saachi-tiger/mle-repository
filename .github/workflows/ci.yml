@@ -3,7 +3,7 @@ name: CI pipeline
 on:
   pull_request:
     branches:
-      - dummy_branch
+      - dummy_branches
 
 
 jobs:
