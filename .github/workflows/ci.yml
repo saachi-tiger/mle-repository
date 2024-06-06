@@ -34,7 +34,7 @@ jobs:
 
           flake8 .
 
-      - name: Run housing_price.py
+      - name: Run nonstandardcode.py
 
         run: |
 
