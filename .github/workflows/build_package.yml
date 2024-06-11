@@ -29,11 +29,11 @@ jobs:
 
     - name: Install build tools
       run: |
-        pip install --upgrade setuptools build
+        conda run -n mle-dev pip install --upgrade setuptools build
 
     - name: Building the package
       run: |
-        python -m build
+        conda run -n mle-dev python -m build
 
     - name: Display directory tree after building
       run: tree
@@ -56,13 +56,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Initialize and Activate Conda
-      run: |
-        conda init bash
-        source ~/.bashrc
-        exec bash -l
-        conda activate mle-dev
-      shell: bash
+    - name: Set up Conda
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        environment-file: env.yml
+        activate-environment: mle-dev
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
@@ -75,11 +73,11 @@ jobs:
 
     - name: Install the package
       run: |
-        pip install dist/*.whl
+        conda run -n mle-dev pip install dist/*.whl
 
     - name: Run housing_price.py
       run: |
-        python -m house_package_saachi.housing_price
+        conda run -n mle-dev python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
