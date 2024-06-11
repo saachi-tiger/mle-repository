@@ -77,13 +77,9 @@ jobs:
       run: |
         pip install dist/*.whl
 
-    - name: Ensure all dependencies are installed
-      run: |
-        conda install --file env.yml
-
     - name: Run housing_price.py
       run: |
-        python -m house_package_saachi.housing_price
+        conda run -n mle-dev python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
       run: tree
