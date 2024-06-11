@@ -77,14 +77,6 @@ jobs:
       run: |
         pip install dist/*.whl
 
-    - name: Determine site-packages location
-      run: |
-        conda run -n mle-dev python -c "import site; print(site.getsitepackages())"
-
-    - name: List contents of site-packages to confirm module installation
-      run: |
-        conda run -n mle-dev bash -c 'for d in $(python -c "import site; [print(p) for p in site.getsitepackages()]"); do ls -la $d/house_package_saachi || true; done'
-
     - name: Run housing_price.py
       run: |
         conda run -n mle-dev python -m house_package_saachi.housing_price
