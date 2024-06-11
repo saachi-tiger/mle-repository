@@ -79,6 +79,10 @@ jobs:
 
     - name: List contents of site-packages to confirm module installation
       run: |
+        conda run -n mle-dev ls -la /usr/share/miniconda/envs/mle-dev/lib/python3.10/site-packages/
+
+    - name: List contents of installed package directory
+      run: |
         conda run -n mle-dev ls -la /usr/share/miniconda/envs/mle-dev/lib/python3.10/site-packages/house_package_saachi
 
     - name: Run housing_price.py
