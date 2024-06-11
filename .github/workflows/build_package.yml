@@ -21,7 +21,6 @@ jobs:
     - name: Display directory tree before building
       run: tree
 
-
     - name: Set up Conda
       uses: conda-incubator/setup-miniconda@v2
       with:
@@ -57,12 +56,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-
     - name: Set up Conda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        environment-file: env.yml
-        activate-environment: mle-dev
+      run: |
+        conda init bash
+        source ~/.bashrc
+        conda activate mle-dev
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
@@ -79,9 +77,6 @@ jobs:
 
     - name: Run housing_price.py
       run: |
-        conda env remove --name mle-dev
-        conda env create -f env.yml
-        conda activate mle-dev
         python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
