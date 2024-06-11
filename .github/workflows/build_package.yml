@@ -58,9 +58,6 @@ jobs:
 
     - name: Activate Conda environment
       run: |
-        conda init bash
-        source ~/.bashrc
-        source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate mle-dev
       shell: bash
 
