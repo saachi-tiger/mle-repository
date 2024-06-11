@@ -77,9 +77,9 @@ jobs:
       run: |
         pip install dist/*.whl
 
-    - name: Ensure the environment is activated and list packages
+    - name: List contents of site-packages to confirm module installation
       run: |
-        conda run -n mle-dev conda list
+        conda run -n mle-dev ls -la /usr/share/miniconda/envs/mle-dev/lib/python3.10/site-packages/house_package_saachi
 
     - name: Run housing_price.py
       run: |
