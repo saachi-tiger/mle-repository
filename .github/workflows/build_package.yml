@@ -60,8 +60,11 @@ jobs:
       run: |
         conda init bash
         source ~/.bashrc
+
+    - name: Activate Conda environment
+      run: |
+        source ~/.bashrc
         conda activate mle-dev
-        conda config --set auto_activate_base false
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
