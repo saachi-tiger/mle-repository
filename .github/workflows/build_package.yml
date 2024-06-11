@@ -79,6 +79,7 @@ jobs:
 
     - name: Run housing_price.py
       run: |
+        source activate mle-dev
         conda run -n mle-dev python -m house_package_saachi.housing_price
 
     - name: Display directory tree after installation
