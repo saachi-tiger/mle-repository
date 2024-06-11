@@ -60,8 +60,10 @@ jobs:
       run: |
         conda init bash
         source ~/.bashrc
+        source /usr/share/miniconda/etc/profile.d/conda.sh
         conda activate mle-dev
       shell: bash
+
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
