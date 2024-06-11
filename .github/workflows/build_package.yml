@@ -64,7 +64,7 @@ jobs:
     - name: Activate Conda environment
       run: |
         conda activate mle-dev
-      shell: /bin/bash
+      shell: bash
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
