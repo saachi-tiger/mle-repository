@@ -56,14 +56,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Initialize Conda
+    - name: Initialize and Activate Conda
       run: |
         conda init bash
-        source ~/.bashrc
-      shell: bash
-
-    - name: Activate Conda environment
-      run: |
         source ~/.bashrc
         conda activate mle-dev
       shell: bash
