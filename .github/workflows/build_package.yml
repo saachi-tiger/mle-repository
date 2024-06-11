@@ -63,7 +63,9 @@ jobs:
       shell: bash
 
     - name: Activate Conda environment
-      run: conda activate mle-dev
+      run: |
+        conda init
+        conda activate mle-dev
       shell: bash
 
 
