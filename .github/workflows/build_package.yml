@@ -60,6 +60,7 @@ jobs:
       run: |
         conda init bash
         source ~/.bashrc
+        exec bash -l
         conda activate mle-dev
       shell: bash
 
