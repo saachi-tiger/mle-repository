@@ -58,8 +58,6 @@ jobs:
 
     - name: Set up Conda
       run: |
-        conda init bash
-        source ~/.bashrc
         conda activate mle-dev
 
     - name: Download build artifacts
