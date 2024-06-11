@@ -56,11 +56,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Conda
-      run: |
-        conda init bash
-        source ~/.bashrc
-        conda activate mle-dev
+    - name: Add Conda initialization to shell configuration
+      run: echo ". /usr/share/miniconda/etc/profile.d/conda.sh" >> ~/.bashrc
+
+    - name: Source the updated shell configuration
+      run: source ~/.bashrc
+
+    - name: Activate Conda environment
+      run: conda activate mle-dev
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
