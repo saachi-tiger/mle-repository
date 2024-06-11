@@ -58,7 +58,10 @@ jobs:
 
     - name: Set up Conda
       run: |
+        conda init bash
+        source ~/.bashrc
         conda activate mle-dev
+        conda config --set auto_activate_base false
 
     - name: Download build artifacts
       uses: actions/download-artifact@v2
