@@ -27,13 +27,11 @@ jobs:
         environment-file: env.yml
         activate-environment: mle-dev
 
-    - name: Install build tools
-      run: |
-        conda run -n mle-dev pip install --upgrade setuptools build
-
     - name: Building the package
       run: |
-        conda run -n mle-dev python -m build
+        pip install --upgrade setuptools
+        pip install --upgrade build
+        python -m build
 
     - name: Display directory tree after building
       run: tree
