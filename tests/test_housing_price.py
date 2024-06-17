@@ -2,6 +2,7 @@ import os
 
 import numpy as np
 import pandas as pd
+import pytest
 from house_package_saachi import housing_price
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
@@ -12,6 +13,7 @@ from sklearn.ensemble import RandomForestRegressor
 from scipy.stats import randint
 
 
+@pytest.fixture
 def housing_data():
     housing_price.fetch_housing_data()
     data = housing_price.load_housing_data()
