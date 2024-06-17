@@ -41,7 +41,7 @@ jobs:
 
     - name: Run tests with pytest
       run: |
-        pytest
+        pytest tests/
       env:
         INPUT_RUN_POST: true
         CONDA_PKGS_DIR: /home/runner/conda_pkgs_dir
