@@ -3,5 +3,5 @@
 .mle-dev/
 *.egg-info/
 dist/
-__pycache__/
-
+tests/**/__pycache__/
+src/**/__pycache__/
