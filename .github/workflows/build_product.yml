@@ -12,17 +12,20 @@ jobs:
         shell: bash -l {0}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install tree CLI tool
+        run: sudo apt-get install -y tree
+
+      - name: Display directory tree before building
+        run: tree
+
       - name: Set up Conda
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev  
           environment-file: env.yml 
-
-      - name: Install tree CLI tool
-        run: sudo apt-get install tree
-
-      - name: Display directory tree before building
-        run: tree .
 
       - name: Build the package
         run:  |
