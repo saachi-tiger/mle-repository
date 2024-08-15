@@ -5,3 +5,4 @@
 dist/
 tests/__pycache__/
 src/house_package_saachi/__pycache__/
+datasets/

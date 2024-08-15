@@ -10,48 +10,56 @@ from house_package_saachi.model_training import (
     evaluate_model,
 )
 from house_package_saachi.model_scoring import score_model
-from house_package_saachi.utils import stratified_split
+from house_package_saachi.data_preprocessing import stratified_split
 import pandas as pd
 import numpy as np
 
 
 def main():
+    # Fetch and load the housing data
     fetch_housing_data()
     housing = load_housing_data()
 
-    housing["income_cat"] = pd.cut(
-        housing["median_income"],
+    # Preprocess the housing data
+    housing_prepared = preprocess_housing_data(housing)
+    housing_prepared["income_cat"] = pd.cut(
+        housing_prepared["median_income"],
         bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
         labels=[1, 2, 3, 4, 5],
     )
 
+    # Perform stratified split after preprocessing
     strat_train_set, strat_test_set = stratified_split(
-        housing, strat_col="income_cat"
+        housing_prepared, strat_col="income_cat"
     )
+
+    # Drop the 'income_cat' column after splitting
     for set_ in (strat_train_set, strat_test_set):
         set_.drop("income_cat", axis=1, inplace=True)
 
-    housing_prepared = preprocess_housing_data(strat_train_set)
+    # Prepare training data
     housing_labels = strat_train_set["median_house_value"].copy()
 
-    lin_reg = train_linear_regression(housing_prepared, housing_labels)
-    tree_reg = train_decision_tree(housing_prepared, housing_labels)
-    forest_reg = train_random_forest(housing_prepared, housing_labels)
+    # Train models
+    lin_reg = train_linear_regression(strat_train_set, housing_labels)
+    tree_reg = train_decision_tree(strat_train_set, housing_labels)
+    forest_reg = train_random_forest(strat_train_set, housing_labels)
 
+    # Evaluate models on the training set
     print("Linear Regression RMSE:", evaluate_model(
-        lin_reg, housing_prepared, housing_labels
+        lin_reg, strat_train_set, housing_labels
     ))
     print("Decision Tree RMSE:", evaluate_model(
-        tree_reg, housing_prepared, housing_labels
+        tree_reg, strat_train_set, housing_labels
     ))
     print("Random Forest RMSE:", evaluate_model(
-        forest_reg, housing_prepared, housing_labels
+        forest_reg, strat_train_set, housing_labels
     ))
 
-    X_test_prepared = preprocess_housing_data(strat_test_set)
+    # Test the final model on the test set
     y_test = strat_test_set["median_house_value"].copy()
     print("Final model RMSE:", score_model(
-        forest_reg, X_test_prepared, y_test
+        forest_reg, strat_test_set, y_test
     ))
 
 
