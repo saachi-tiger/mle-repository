@@ -3,5 +3,15 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "houseprice"
+name = "house_package_saachi"
 version = "0.0.1"
+description = "Predicts the price of house based on the features"
+authors = [
+    {name = "Saachi Mohanty", email = "saachi.mohanty@tigeranalytics.com"}
+]
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
