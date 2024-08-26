@@ -29,7 +29,8 @@ jobs:
           show-channel-urls: true
           use-only-tar-bz2: true
           environment-file: env.yml
-          activate-environment: mle-dev 
+          activate-environment: mle-dev
+          auto-activate-base: false
 
       - name: Create Conda environment
         run: conda create -n mle-dev python=3.10
