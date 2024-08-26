@@ -35,21 +35,21 @@ jobs:
           conda update -q conda
           conda info -a
           conda create -n mle-dev python=3.10
-          conda activate mle-dev
+          source activate mle-dev
         
       - name: Install the package in developer mode
         run: |
-          conda activate mle-dev
+          source activate mle-dev
           pip install -e .
 
       - name: Install additional dependencies
         run: |
-          conda activate mle-dev
+          source activate mle-dev
           pip install -e .[dev]
       
       - name: Run Tests with Pytest
         run: |
-          conda activate mle-dev
+          source activate mle-dev
           pytest --maxfail=1 --disable-warnings
 
       - name: Fail if Tests Fail
