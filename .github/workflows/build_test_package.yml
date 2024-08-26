@@ -29,6 +29,9 @@ jobs:
           show-channel-urls: true
           use-only-tar-bz2: true
 
+      - name: Check Conda installation
+        run: conda --version
+
       - name: Configure Conda
         run: |
           conda config --set always_yes yes --set changeps1 no
