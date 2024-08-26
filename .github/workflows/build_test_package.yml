@@ -47,6 +47,7 @@ jobs:
       - name: Run Tests with Pytest
         run: |
           conda activate mle-dev
+          conda list
           pytest --maxfail=1 --disable-warnings
 
       - name: Fail if Tests Fail
