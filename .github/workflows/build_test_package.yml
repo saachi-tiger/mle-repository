@@ -21,37 +21,37 @@ jobs:
       - name: Display directory tree before building
         run: tree
 
-      - name: Set up Miniforge
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          installer-url: https://github.com/conda-forge/miniforge/releases/download/4.8.3-2/Miniforge-pypy3-4.8.3-2-Linux-x86_64.sh
-          auto-activate-base: false
-          environment-file: env.yml
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+        shell: bash -l {0}
 
       - name: Create Conda environment
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda env create -f env.yml
+        shell: bash -l {0}
 
       - name: Activate Conda environment and install the package in developer mode
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
           pip install -e .
+        shell: bash -l {0}
 
       - name: Install additional dependencies
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
           pip install -e .[dev]
+        shell: bash -l {0}
       
       - name: Run Tests with Pytest
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
-          conda list
           pytest --maxfail=1 --disable-warnings
-
-      - name: Fail if Tests Fail
-        if: failure()
-        run: exit 1
+        shell: bash -l {0}
