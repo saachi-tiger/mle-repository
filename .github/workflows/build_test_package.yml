@@ -28,6 +28,8 @@ jobs:
           allow-softlinks: true
           show-channel-urls: true
           use-only-tar-bz2: true
+          environment-file: env.yml
+          activate-environment: mle-dev 
 
       - name: Create Conda environment
         run: conda create -n mle-dev python=3.10
