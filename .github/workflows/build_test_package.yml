@@ -28,8 +28,6 @@ jobs:
           allow-softlinks: true
           show-channel-urls: true
           use-only-tar-bz2: true
-          activate-environment: mle-dev  
-          environment-file: env.yml
 
       - name: Create and activate environment
         run: |
