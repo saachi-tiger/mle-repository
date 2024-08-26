@@ -35,14 +35,14 @@ jobs:
           conda env create -f env.yml
         shell: bash -l {0}
 
-      - name: Activate Conda environment and install the package in developer mode
+      - name: Install the package in developer mode
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
           pip install -e .
         shell: bash -l {0}
 
-      - name: Install additional dependencies
+      - name: Install dependencies
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
