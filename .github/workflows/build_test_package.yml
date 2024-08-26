@@ -29,12 +29,19 @@ jobs:
           show-channel-urls: true
           use-only-tar-bz2: true
 
-      - name: Create and activate environment
+      # Run global Conda configuration and updates before creating the environment
+      - name: Configure Conda
         run: |
           conda config --set always_yes yes --set changeps1 no
           conda update -q conda
           conda info -a
+
+      - name: Create Conda environment
+        run: |
           conda create -n mle-dev python=3.10
+
+      - name: Activate Conda environment
+        run: |
           source activate mle-dev
         
       - name: Install the package in developer mode
