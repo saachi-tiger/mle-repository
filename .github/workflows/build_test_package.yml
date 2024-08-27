@@ -1,0 +1,57 @@
+name: Build and Test as Python module
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install tree CLI tool
+        run: sudo apt-get install -y tree
+
+      - name: Display directory tree before building
+        run: tree
+
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+        shell: bash -l {0}
+
+      - name: Create Conda environment
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda env create -f env.yml
+        shell: bash -l {0}
+
+      - name: Install the package in developer mode
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install -e .
+        shell: bash -l {0}
+
+      - name: Install dependencies
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install -e .[dev]
+        shell: bash -l {0}
+      
+      - name: Run Tests with Pytest
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pytest --maxfail=1 --disable-warnings
+        shell: bash -l {0}
