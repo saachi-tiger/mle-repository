@@ -75,7 +75,8 @@ jobs:
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
-          python setup.py bdist_wheel
+          pip install build
+          python -m build
 
       - name: Install the package from built .whl
         run: |
