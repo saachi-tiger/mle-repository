@@ -123,12 +123,13 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: built-artifact
+          path: dist  # Ensure the artifact is placed in the dist directory
 
       - name: Install the package
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
-          pip install built-artifact/*.whl
+          pip install dist/*.whl  # Reference the correct path for the .whl files
 
       - name: Run the scripts in help mode
         run: |
