@@ -135,5 +135,14 @@ jobs:
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
+          python scripts/ingest_data.py -h
           python scripts/train.py -h
           python scripts/score.py -h
+
+      - name: Run the scripts in normal mode
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          python scripts/ingest_data.py
+          python scripts/train.py
+          python scripts/score.py
