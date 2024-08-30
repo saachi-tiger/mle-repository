@@ -1,0 +1,148 @@
+name: Build, Test, and Deploy Python Module
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install tree CLI tool
+        run: sudo apt-get install -y tree
+
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+
+      - name: Create Conda environment
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda env create -f env.yml
+
+      - name: Display directory tree before building
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          tree
+
+      - name: Install the package in developer mode
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install -e .
+
+      - name: Run Unit Tests with Pytest
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pytest --maxfail=1 --disable-warnings
+
+  build:
+    runs-on: ubuntu-latest
+    needs: unit-test  # Ensures this job runs after the unit-test job
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+
+      - name: Create Conda environment
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda env create -f env.yml
+
+      - name: Build the package
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install build
+          python -m build
+
+      - name: Install the package from built .whl
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install dist/*.whl
+
+      - name: Run Installation Tests with Pytest
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pytest --maxfail=1 --disable-warnings
+
+      - name: Upload built artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-artifact
+          path: dist/*.whl
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Ensures this job runs after the build job
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+
+      - name: Create Conda environment
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda env create -f env.yml
+
+      - name: Download built artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: built-artifact
+          path: dist  # Ensure the artifact is placed in the dist directory
+
+      - name: Install the package
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          pip install dist/*.whl  # Reference the correct path for the .whl files
+
+      - name: Run the scripts in help mode
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          python scripts/ingest_data.py -h
+          python scripts/train.py -h
+          python scripts/score.py -h
+
+      - name: Run the scripts in normal mode
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          python scripts/ingest_data.py --output-path datasets/housing.csv
+          python scripts/train.py --input-path datasets/housing --output-path models/
+          python scripts/score.py --model-path models/linear_regression.pkl --dataset-path datasets/housing/housing.csv --output-path scores/linear_regression_score.txt
