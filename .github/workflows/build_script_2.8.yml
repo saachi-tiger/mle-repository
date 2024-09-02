@@ -1,0 +1,46 @@
+name: Build Documentation [Assignment 2.8]
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Miniforge
+        run: |
+          wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O miniforge.sh
+          bash miniforge.sh -b -p $HOME/miniforge3
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda init bash
+
+      - name: Create Conda environment
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda env create -f env.yml
+
+      - name: Display directory tree before building docs
+        run: |
+          tree -L 3
+
+      - name: Build Sphinx documentation
+        run: |
+          source $HOME/miniforge3/etc/profile.d/conda.sh
+          conda activate mle-dev
+          cd docs
+          make html
+
+      - name: Display directory tree after building docs
+        run: |
+          tree -L 3 docs/_build
+
+      - name: Upload built documentation
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-docs-html
+          path: docs/_build/html

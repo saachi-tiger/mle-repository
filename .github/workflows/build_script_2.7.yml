@@ -2,7 +2,8 @@ name: Build and Deploy Python Module [Assignment_2.7]
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - dummy_branches
 
 jobs:
   build:
