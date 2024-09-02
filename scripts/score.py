@@ -7,7 +7,7 @@ from house_package_saachi.data_preprocessing import preprocess_housing_data
 from house_package_saachi.model_scoring import score_model
 
 def setup_logger(log_level, log_path=None, no_console_log=False):
-    logger = logging.getLogger()
+    logger = logging.getLogger(__name__)  # Use the module's name instead of root
     logger.setLevel(log_level)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -22,24 +22,26 @@ def setup_logger(log_level, log_path=None, no_console_log=False):
         logger.addHandler(console_handler)
 
 def main(model_path, dataset_path, output_path):
-    logging.info("Loading the dataset.")
+    logger = logging.getLogger(__name__)  # Retrieve the module-specific logger
+
+    logger.info("Loading the dataset.")
     housing = pd.read_csv(dataset_path)
     
-    logging.info("Separating the target variable from the features.")
+    logger.info("Separating the target variable from the features.")
     housing_labels = housing["median_house_value"].copy()
     housing = housing.drop("median_house_value", axis=1)
     
-    logging.info("Preprocessing the data.")
+    logger.info("Preprocessing the data.")
     housing_prepared = preprocess_housing_data(housing)
     
-    logging.info("Loading the model.")
+    logger.info("Loading the model.")
     model = joblib.load(model_path)
     
-    logging.info("Scoring the model.")
+    logger.info("Scoring the model.")
     rmse = score_model(model, housing_prepared, housing_labels)
-    logging.info(f"Model RMSE: {rmse}")
+    logger.info(f"Model RMSE: {rmse}")
     
-    logging.info("Saving the score to the specified output path.")
+    logger.info("Saving the score to the specified output path.")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w") as f:
         f.write(f"RMSE: {rmse}\n")

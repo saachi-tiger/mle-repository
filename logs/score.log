@@ -1,7 +1,0 @@
-2024-09-02 11:27:49,467 - root - INFO - Loading the dataset.
-2024-09-02 11:27:49,489 - root - INFO - Separating the target variable from the features.
-2024-09-02 11:27:49,493 - root - INFO - Preprocessing the data.
-2024-09-02 11:27:49,521 - root - INFO - Loading the model.
-2024-09-02 11:27:49,522 - root - INFO - Scoring the model.
-2024-09-02 11:27:49,531 - root - INFO - Model RMSE: 68286.12607251322
-2024-09-02 11:27:49,531 - root - INFO - Saving the score to the specified output path.

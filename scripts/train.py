@@ -8,7 +8,7 @@ from house_package_saachi.data_preprocessing import preprocess_housing_data
 from house_package_saachi.model_training import train_linear_regression, evaluate_model
 
 def setup_logger(log_level, log_path=None, no_console_log=False):
-    logger = logging.getLogger()
+    logger = logging.getLogger(__name__)  # Ensure the logger uses the module's name
     logger.setLevel(log_level)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -23,24 +23,26 @@ def setup_logger(log_level, log_path=None, no_console_log=False):
         logger.addHandler(console_handler)
 
 def main(input_path, output_path):
-    logging.info("Loading housing data.")
+    logger = logging.getLogger(__name__)  # Get the logger for this module
+
+    logger.info("Loading housing data.")
     housing = load_housing_data(input_path)
     
-    logging.info("Separating target from features.")
+    logger.info("Separating target from features.")
     housing_labels = housing["median_house_value"].copy()
     housing = housing.drop("median_house_value", axis=1)
     
-    logging.info("Preprocessing housing data.")
+    logger.info("Preprocessing housing data.")
     housing_prepared = preprocess_housing_data(housing)
     
-    logging.info("Training the linear regression model.")
+    logger.info("Training the linear regression model.")
     lin_reg = train_linear_regression(housing_prepared, housing_labels)
     
-    logging.info("Evaluating the model.")
+    logger.info("Evaluating the model.")
     rmse = evaluate_model(lin_reg, housing_prepared, housing_labels)
-    logging.info(f"Training RMSE: {rmse}")
+    logger.info(f"Training RMSE: {rmse}")
     
-    logging.info("Saving the trained model.")
+    logger.info("Saving the trained model.")
     os.makedirs(output_path, exist_ok=True)
     joblib.dump(lin_reg, f"{output_path}/linear_regression.pkl")
 

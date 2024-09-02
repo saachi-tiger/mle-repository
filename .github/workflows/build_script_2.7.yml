@@ -71,6 +71,7 @@ jobs:
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
-          python scripts/ingest_data.py --output-path ./datasets/housing_data.csv --log-level INFO --log-path ./logs/ingest_data.log
-          python scripts/train.py --input-path datasets/housing --output-path ./models --log-level INFO --log-path ./logs/train.log
-          python scripts/score.py --model-path models/linear_regression.pkl --dataset-path datasets/housing_data.csv --output-path ./results/score.txt --log-level INFO --log-path ./logs/score.log
+          python scripts/ingest_data.py --output-path ./datasets/housing_data.csv --log-level DEBUG
+          python scripts/train.py --input-path datasets/housing --output-path models/ --
+          log-level DEBUG
+          python scripts/score.py --model-path models/linear_regression.pkl --dataset-path datasets/housing_data.csv --output-path results/score.txt --log-level DEBUG

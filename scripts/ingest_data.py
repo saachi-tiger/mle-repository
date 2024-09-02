@@ -3,7 +3,7 @@ import logging
 from house_package_saachi.data_ingestion import fetch_housing_data, load_housing_data
 
 def setup_logger(log_level, log_path=None, no_console_log=False):
-    logger = logging.getLogger()
+    logger = logging.getLogger(__name__)
     logger.setLevel(log_level)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -17,13 +17,20 @@ def setup_logger(log_level, log_path=None, no_console_log=False):
         console_handler.setFormatter(formatter)
         logger.addHandler(console_handler)
 
+    if logger.hasHandlers():
+        logger.handlers.clear()
+        logger.addHandler(console_handler)
+        if log_path:
+            logger.addHandler(file_handler)
+
 def main(output_path):
-    logging.info("Fetching and loading housing data.")
+    logger = logging.getLogger(__name__)
+    logger.info("Fetching and loading housing data.")
     fetch_housing_data()
     data = load_housing_data()
-    logging.info("Saving data to the specified output path.")
+    logger.info("Saving data to the specified output path.")
     data.to_csv(output_path, index=False)
-    logging.info(f"Data successfully saved to {output_path}")
+    logger.info(f"Data successfully saved to {output_path}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download and save the housing dataset.")
