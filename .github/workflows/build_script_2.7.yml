@@ -32,6 +32,7 @@ jobs:
         with:
           name: built-artifact
           path: dist
+        run: ls -la dist
 
       - name: Install the package
         run: |
