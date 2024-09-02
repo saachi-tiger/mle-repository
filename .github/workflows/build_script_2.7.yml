@@ -28,13 +28,10 @@ jobs:
           conda env create -f env.yml
 
       - name: Download built artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
-          name: built-artifact
+          name: build-artifacts
           path: dist
-      
-      - name: List downloaded artifacts
-        run: ls -la dist
 
       - name: Install the package
         run: |
