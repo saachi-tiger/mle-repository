@@ -8,3 +8,5 @@ src/house_package_saachi/__pycache__/
 datasets/
 models/
 scores/
+logs/
+results/
