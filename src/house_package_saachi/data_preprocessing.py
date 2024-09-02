@@ -4,9 +4,11 @@ from sklearn.impute import SimpleImputer
 from sklearn.model_selection import StratifiedShuffleSplit
 import logging
 
+# Set up the logger
+logger = logging.getLogger(__name__)
 
 def stratified_split(df, strat_col, test_size=0.2, random_state=42):
-    logging.info("Performing stratified split on the dataset.")
+    logger.info("Performing stratified split on the dataset.")
     split = StratifiedShuffleSplit(
         n_splits=1, test_size=test_size, random_state=random_state
     )
@@ -20,7 +22,7 @@ def add_extra_features(df):
     df["rooms_per_household"] = df["total_rooms"] / df["households"]
     df["bedrooms_per_room"] = df["total_bedrooms"] / df["total_rooms"]
     df["population_per_household"] = df["population"] / df["households"]
-    logging.info("Extra features added successfully.")
+    logger.info("Extra features added successfully.")
     return df
 
 
@@ -30,9 +32,11 @@ def preprocess_housing_data(df):
     df_num_imputed = pd.DataFrame(
         imputer.fit_transform(df_num), columns=df_num.columns
     )
-    logging.info("Numerical data imputation completed.")
+    logger.info("Numerical data imputation completed.")
+    
     df_cat = pd.get_dummies(df[["ocean_proximity"]], drop_first=True)
     df_prepared = df_num_imputed.join(df_cat)
     df_prepared = add_extra_features(df_prepared)
-    logging.info("Preprocessing completed.")
+    
+    logger.info("Preprocessing completed.")
     return df_prepared
