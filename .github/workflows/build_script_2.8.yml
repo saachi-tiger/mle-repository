@@ -39,7 +39,7 @@ jobs:
 
       - name: Display directory tree after building docs
         run: |
-          tree -L 3 docs/_build
+          tree -L 3 docs/build
 
       - name: Upload built documentation
         uses: actions/upload-artifact@v3
