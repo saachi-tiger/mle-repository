@@ -32,6 +32,8 @@ jobs:
         run: |
           source $HOME/miniforge3/etc/profile.d/conda.sh
           conda activate mle-dev
+          conda install -y sphinx
+          pip install sphinx sphinx_rtd_theme
           cd docs
           make html
 
