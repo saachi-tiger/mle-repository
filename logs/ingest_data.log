@@ -1,0 +1,5 @@
+2024-09-02 11:20:18,144 - root - INFO - Fetching and loading housing data.
+2024-09-02 11:20:18,727 - root - INFO - Saving data to the specified output path.
+2024-09-02 11:23:24,931 - root - INFO - Fetching and loading housing data.
+2024-09-02 11:23:25,177 - root - INFO - Saving data to the specified output path.
+2024-09-02 11:23:25,297 - root - INFO - Data successfully saved to ./datasets/housing_data.csv

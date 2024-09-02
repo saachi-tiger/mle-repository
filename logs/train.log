@@ -1,0 +1,9 @@
+2024-09-02 11:24:52,816 - root - INFO - Loading housing data.
+2024-09-02 11:25:44,340 - root - INFO - Loading housing data.
+2024-09-02 11:26:24,180 - root - INFO - Loading housing data.
+2024-09-02 11:26:24,203 - root - INFO - Separating target from features.
+2024-09-02 11:26:24,207 - root - INFO - Preprocessing housing data.
+2024-09-02 11:26:24,236 - root - INFO - Training the linear regression model.
+2024-09-02 11:26:24,271 - root - INFO - Evaluating the model.
+2024-09-02 11:26:24,275 - root - INFO - Training RMSE: 68286.12607251322
+2024-09-02 11:26:24,276 - root - INFO - Saving the trained model.
