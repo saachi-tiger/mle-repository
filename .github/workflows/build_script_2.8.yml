@@ -35,7 +35,8 @@ jobs:
           conda install -y sphinx
           pip install sphinx sphinx_rtd_theme
           cd docs
-          sphinx-build -b html . _build/html -v || { echo 'Sphinx build failed'; exit 1; }
+          sphinx-quickstart --quiet --no-interaction --sep -p "ta_lib" -a "Tiger Analytics" -v "0.0.1" -r "0.0.1" docs
+          make html
 
       - name: Display directory tree after building docs
         run: |
