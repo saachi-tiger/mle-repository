@@ -5,21 +5,30 @@ from sklearn.model_selection import RandomizedSearchCV
 from scipy.stats import randint
 from sklearn.metrics import mean_squared_error
 import numpy as np
+import logging
 
+# Set up the logger
+logger = logging.getLogger(__name__)
+
+# Configure logging level
+logging.basicConfig(level=logging.INFO)
 
 def train_linear_regression(X, y):
+    logger.info("Training Linear Regression model.")
     lin_reg = LinearRegression()
     lin_reg.fit(X, y)
+    logger.info("Linear Regression training completed.")
     return lin_reg
 
-
 def train_decision_tree(X, y):
+    logger.info("Training Decision Tree Regressor model.")
     tree_reg = DecisionTreeRegressor(random_state=42)
     tree_reg.fit(X, y)
+    logger.info("Decision Tree Regressor training completed.")
     return tree_reg
 
-
 def train_random_forest(X, y):
+    logger.info("Training Random Forest Regressor model with randomized search.")
     param_distribs = {
         "n_estimators": randint(low=1, high=200),
         "max_features": randint(low=1, high=8),
@@ -30,11 +39,13 @@ def train_random_forest(X, y):
         scoring="neg_mean_squared_error", random_state=42
     )
     rnd_search.fit(X, y)
+    logger.info("Random Forest Regressor training completed.")
     return rnd_search.best_estimator_
 
-
 def evaluate_model(model, X, y):
+    logger.info(f"Evaluating model: {model}")
     predictions = model.predict(X)
     mse = mean_squared_error(y, predictions)
     rmse = np.sqrt(mse)
+    logger.info(f"Model evaluation completed. RMSE: {rmse:.4f}")
     return rmse

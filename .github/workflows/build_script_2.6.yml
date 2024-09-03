@@ -2,7 +2,8 @@ name: Build, Test, and Deploy Python Module
 
 on:
   pull_request:
-    branches: [main]
+    branches: 
+      - dummy_branches
 
 jobs:
   unit-test:
