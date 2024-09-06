@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to v4
 
       - name: Install Miniforge
         run: |
@@ -35,14 +35,14 @@ jobs:
           conda install -y sphinx
           pip install sphinx sphinx_rtd_theme
           cd docs
-          make html || { echo "Sphinx build failed"; exit 1; }  # Capture any build failure
+          make html || { echo "Sphinx build failed"; exit 1; }
 
       - name: Display directory tree after building docs
         run: |
-          tree -L 3 docs/_build || tree -L 3 docs/build  # Try both common build locations
+          tree -L 3 docs/_build || tree -L 3 docs/build
 
       - name: Upload built documentation
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: built-docs-html
           path: |
