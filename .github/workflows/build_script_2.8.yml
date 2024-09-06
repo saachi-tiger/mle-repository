@@ -35,14 +35,16 @@ jobs:
           conda install -y sphinx
           pip install sphinx sphinx_rtd_theme
           cd docs
-          make html
+          make html || { echo "Sphinx build failed"; exit 1; }  # Capture any build failure
 
       - name: Display directory tree after building docs
         run: |
-          tree -L 3 docs/build
+          tree -L 3 docs/_build || tree -L 3 docs/build  # Try both common build locations
 
       - name: Upload built documentation
         uses: actions/upload-artifact@v3
         with:
           name: built-docs-html
-          path: docs/_build/html
+          path: |
+            docs/_build/html
+            docs/build/html
