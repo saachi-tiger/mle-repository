@@ -2,7 +2,8 @@ name: Build Documentation [Assignment 2.8]
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - dummy_branches
 
 jobs:
   build-docs:
